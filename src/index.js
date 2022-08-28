@@ -3,6 +3,7 @@ import { engine } from "express-handlebars";
 import morgan from "morgan";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
+import route from "./routes/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,24 +34,9 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-app.get("/news", (req, res) => {
-  res.render("news");
-});
-
-app.get("/search", (req, res) => {
-  res.render("search");
-});
-
-app.post("/search", (req, res) => {
-  console.log(req.body.q, req.body.gender);
-
-  res.send("");
-});
+// Routes init
+route(app);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Example app listening on http://localhost:${port}`);
 });
