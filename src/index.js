@@ -1,8 +1,9 @@
-import express from "express";
+const express = require("express");
 import { engine } from "express-handlebars";
 import morgan from "morgan";
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
+const path = require("path");
+// import { fileURLToPath } from "url";
+// import path, { dirname } from "path";
 
 import route from "./routes/index.js";
 import { connect } from "./config/db/index.js";
@@ -10,8 +11,8 @@ import { connect } from "./config/db/index.js";
 // Connect to db
 const db = connect();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3000;
