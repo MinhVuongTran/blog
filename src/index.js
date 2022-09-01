@@ -1,9 +1,10 @@
-const express = require("express");
+import express from "express";
 import { engine } from "express-handlebars";
 import morgan from "morgan";
 const path = require("path");
 // import { fileURLToPath } from "url";
-// import path, { dirname } from "path";
+// import path, { dirname } from "path"
+const methodOverride = require("method-override");
 
 import route from "./routes/index.js";
 import { connect } from "./config/db/index.js";
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride("_method"));
 
 // HTTP Logger
 // app.use(morgan("combined"));
@@ -31,6 +33,9 @@ app.engine(
     engine({
         extname: ".hbs",
         encoding: "utf8",
+        helpers: {
+            sum: (a, b) => a + b,
+        },
     })
 );
 app.set("view engine", "hbs");
