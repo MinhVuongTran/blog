@@ -8,6 +8,7 @@ coursesRouter.get("/create", courseController.create);
 coursesRouter.post("/store", courseController.store);
 coursesRouter.get("/:id/edit", courseController.edit);
 coursesRouter.put("/:id", courseController.update);
+coursesRouter.delete("/:id", courseController.delete);
 coursesRouter.get("/:slug", courseController.show);
 
 export { coursesRouter };
