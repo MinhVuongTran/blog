@@ -1,5 +1,8 @@
 <div class="mt-4">
-    <h3>Khóa học của tôi</h3>
+    <div class="d-flex mt-4 justify-content-between align-items-center">
+        <h3>Khóa học của tôi</h3>
+        <a href="/me/trash/courses">Thùng giác</a>
+    </div>
 
     <table class="table mt-4">
         <thead>
@@ -16,14 +19,25 @@
                     <td>{{this.name}}</td>
                     <td>{{this.createdAt}}</td>
                     <td><a class="btn btn-primary" href="/courses/{{this._id}}/edit" role="button">Sửa</a></td>
-                    <td><a
-                            class="btn btn-primary"
+                    <td>
+                        <a
+                            class="btn btn-danger"
                             href="#"
                             role="button"
                             data-bs-id="{{this._id}}"
                             data-bs-toggle="modal"
                             data-bs-target="#confirm-delete-course"
-                        >Xóa</a></td>
+                        >
+                            Xóa
+                        </a>
+                    </td>
+                </tr>
+            {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Bạn chưa đăng khóa học nào
+                        <a href="/courses/create">Đăng khóa học</a>
+                    </td>
                 </tr>
             {{/each}}
         </tbody>
@@ -35,7 +49,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Thông báo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -49,23 +63,23 @@
     </div>
 </div>
 
-{{!-- Delet hidden form --}}
+{{! Delete hidden form }}
 <form method="POST" name="delete-course-form">
 </form>
 
 <script>
-    const confirmDeleteCourse = document.getElementById('confirm-delete-course');
-    let courseId;
-    const deleteForm = document.forms['delete-course-form'];
+    const confirmDeleteCourse = document.getElementById('confirm-delete-course'); 
+    let courseId; 
+    const deleteForm = document.forms['delete-course-form']; 
     confirmDeleteCourse.addEventListener('show.bs.modal', event => { 
         const button = event.relatedTarget; 
         const id = button.getAttribute('data-bs-id'); 
-        courseId = id;
+        courseId = id; 
+        const btnDeleteCourse = document.querySelector('#btn-delete-course'); 
 
-        const btnDeleteCourse = document.querySelector('#btn-delete-course');
-        btnDeleteCourse.onclick = () => {
-            deleteForm.action = `/courses/${courseId}?_method=DELETE`;
-            deleteForm.submit();
-        }
+        btnDeleteCourse.onclick = () => { 
+            deleteForm.action = `/courses/${courseId}?_method=DELETE`; 
+            deleteForm.submit(); 
+        } 
     })
 </script>

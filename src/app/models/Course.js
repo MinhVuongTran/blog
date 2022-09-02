@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import slugGenerator from "mongoose-slug-generator/lib/slug-generator.js";
-
-mongoose.plugin(slugGenerator);
+import mongooseDelete from "mongoose-delete";
 
 const Schema = mongoose.Schema;
 
@@ -17,5 +16,12 @@ const Course = new Schema(
         timestamps: true,
     }
 );
+
+// Add plugin
+mongoose.plugin(slugGenerator);
+Course.plugin(mongooseDelete, {
+    deletedAt: true,
+    overrideMethods: "all",
+});
 
 export { Course };

@@ -5,5 +5,6 @@ const meRouter = express.Router();
 const meController = new MeController();
 
 meRouter.get("/stored/courses", meController.storedCourses);
+meRouter.get("/trash/courses", meController.trashCourses);
 
 export { meRouter };
