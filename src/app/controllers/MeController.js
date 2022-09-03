@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
-import { Course } from "../models/Course.js";
-import { multipleMongooseToObject } from "../../util/mongoose.js";
+import mongoose from 'mongoose';
+import { Course } from '../models/Course.js';
+import { multipleMongooseToObject } from '../../util/mongoose.js';
 
-const course = mongoose.model("Course", Course);
+const course = mongoose.model('Course', Course);
 export class MeController {
     // [GET] /me/stored/courses
     storedCourses(req, res, next) {
         Promise.all([course.find(), course.countDocumentsDeleted()]).then(([courses, deletedCount]) => {
-            res.render("me/stored-courses", {
+            res.render('me/stored-courses', {
                 deletedCount,
                 courses: multipleMongooseToObject(courses),
             });
@@ -35,7 +35,7 @@ export class MeController {
         course
             .findDeleted({})
             .then((courses) =>
-                res.render("me/trash-courses", {
+                res.render('me/trash-courses', {
                     courses: multipleMongooseToObject(courses),
                 })
             )

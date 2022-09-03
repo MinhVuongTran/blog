@@ -137,11 +137,4 @@
         checkedCount > 0 ? executeBtn.classList.remove('disabled') : executeBtn.classList.add('disabled');
     }
 
-    executeBtn.onclick = (e) => {
-        let isSubmitted = executeBtn.classList.contains('disabled');
-        if (isSubmitted) {
-            e.preventDefault();
-        }
-    }
-
 </script>

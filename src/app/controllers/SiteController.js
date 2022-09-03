@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
-import { Course } from "../models/Course.js";
-import { multipleMongooseToObject } from "../../util/mongoose.js";
+import mongoose from 'mongoose';
+import { Course } from '../models/Course.js';
+import { multipleMongooseToObject } from '../../util/mongoose.js';
 
-const course = mongoose.model("Course", Course);
+const course = mongoose.model('Course', Course);
 export class SiteController {
     // [GET] /
     index(req, res, next) {
         course
             .find({})
             .then((courses) => {
-                res.render("home", {
+                res.render('home', {
                     // C1
                     courses: multipleMongooseToObject(courses),
                 });
@@ -20,6 +20,6 @@ export class SiteController {
 
     // [GET] /search
     search(req, res) {
-        res.render("Search");
+        res.render('Search');
     }
 }

@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
-import { Course } from "../models/Course.js";
-import { mongooseToObject } from "../../util/mongoose.js";
+import mongoose from 'mongoose';
+import { Course } from '../models/Course.js';
+import { mongooseToObject } from '../../util/mongoose.js';
 
-const course = mongoose.model("Course", Course);
+const course = mongoose.model('Course', Course);
 export class CourseController {
     // [GET] /search/:slug
     show(req, res, next) {
         course
             .findOne({ slug: req.params.slug })
             .then((course) => {
-                res.render("courses/show", {
+                res.render('courses/show', {
                     course: mongooseToObject(course),
                 });
             })
@@ -18,7 +18,7 @@ export class CourseController {
 
     // [GET] /search/create
     create(req, res, next) {
-        res.render("courses/create");
+        res.render('courses/create');
     }
 
     // [POST] /search/store
@@ -27,7 +27,7 @@ export class CourseController {
         req.body.image = `https://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`;
         const COURSE = new course(req.body);
         COURSE.save()
-            .then(() => res.redirect("/me/stored/courses"))
+            .then(() => res.redirect('/me/stored/courses'))
             .catch((error) => {});
     }
 
@@ -36,7 +36,7 @@ export class CourseController {
         course
             .findById(req.params.id)
             .then((course) =>
-                res.render("courses/edit", {
+                res.render('courses/edit', {
                     course: mongooseToObject(course),
                 })
             )
@@ -47,7 +47,7 @@ export class CourseController {
     update(req, res, next) {
         course
             .updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect("/me/stored/courses"))
+            .then(() => res.redirect('/me/stored/courses'))
             .catch(next);
     }
 
@@ -55,7 +55,7 @@ export class CourseController {
     delete(req, res, next) {
         course
             .delete({ _id: req.params.id })
-            .then(() => res.redirect("back"))
+            .then(() => res.redirect('back'))
             .catch(next);
     }
 
@@ -63,7 +63,7 @@ export class CourseController {
     forceDelete(req, res, next) {
         course
             .deleteOne({ _id: req.params.id })
-            .then(() => res.redirect("back"))
+            .then(() => res.redirect('back'))
             .catch(next);
     }
 
@@ -71,33 +71,33 @@ export class CourseController {
     restore(req, res, next) {
         course
             .restore({ _id: req.params.id })
-            .then(() => res.redirect("back"))
+            .then(() => res.redirect('back'))
             .catch(next);
     }
 
     // [POST] /courses/handle-form-actions
     handleFormActions(req, res, next) {
         switch (req.body.action) {
-            case "delete":
+            case 'delete':
                 course
                     .delete({ _id: { $in: req.body.courseIds } })
-                    .then(() => res.redirect("back"))
+                    .then(() => res.redirect('back'))
                     .catch(next);
                 break;
-            case "restore":
+            case 'restore':
                 course
-                    .restore({ _id: { $in: req.body.courseIds} })
-                    .then(() => res.redirect("back"))
+                    .restore({ _id: { $in: req.body.courseIds } })
+                    .then(() => res.redirect('back'))
                     .catch(next);
                 break;
-            case "forceDelete":
+            case 'forceDelete':
                 course
-                    .deleteMany({ _id: { $in: req.body.courseIds} })
-                    .then(() => res.redirect("back"))
+                    .deleteMany({ _id: { $in: req.body.courseIds } })
+                    .then(() => res.redirect('back'))
                     .catch(next);
                 break;
             default:
-                res.json({ message: "Action invalid" });
+                res.json({ message: 'Action invalid' });
                 break;
         }
     }
