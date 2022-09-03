@@ -6,6 +6,7 @@ const courseController = new CourseController();
 
 coursesRouter.get("/create", courseController.create);
 coursesRouter.post("/store", courseController.store);
+coursesRouter.post("/handle-form-actions", courseController.handleFormActions);
 coursesRouter.get("/:id/edit", courseController.edit);
 coursesRouter.put("/:id", courseController.update);
 coursesRouter.patch("/:id/restore", courseController.restore);
