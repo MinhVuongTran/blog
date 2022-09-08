@@ -7,21 +7,15 @@ const course = mongoose.model('Course', Course);
 export class MeController {
     // [GET] /me/stored/courses
     storedCourses(req, res, next) {
-        let courseQuery = course.find();
+        Promise.all([course.find({}).sortable(req), course.countDocumentsDeleted()])
+            .then(([courses, deletedCount]) => {
+                res.render('me/stored-courses', {
+                    deletedCount,
+                    courses: multipleMongooseToObject(courses),
+                });
+            })
+            .catch(next);
 
-        if (req.query.hasOwnProperty('_sort')) {
-            courseQuery = courseQuery.sort({
-                [req.query.column]: req.query.type,
-            });
-        }
-
-        Promise.all([courseQuery, course.countDocumentsDeleted()]).then(([courses, deletedCount]) => {
-            res.render('me/stored-courses', {
-                deletedCount,
-                courses: multipleMongooseToObject(courses),
-            });
-        });
-        //     .catch(() => {})
         // course
         //     .countDocumentsDeleted()
         //     .then((deletedCount) => {
